@@ -6,12 +6,10 @@ import yaml
 import pandas as pd
 import streamlit as st
 
-import matplotlib.pyplot as plt
-
 from matching.utils import shape_data
-
 from src.drawer import Drawer
 from src.typing import Content
+
 
 with open("config.yml") as f:
     cfg = yaml.load(f, Loader=yaml.SafeLoader)
@@ -34,7 +32,7 @@ def main():
         _acc1, _acc5 = 0, 0
         _num_queries = 0
 
-        num_db, num_queries = [], []
+        num_queries = []
         acc1_list, acc5_list = [], []
 
         for id_query in id_queries:
@@ -51,11 +49,11 @@ def main():
             _acc5 += acc5
             _num_queries += num_query
 
-        num_db = [1 for i in range(len(num_queries))]
+        # num_db = [1 for i in range(len(num_queries))]
 
         table_df = pd.DataFrame(
             {
-                "db": num_db,
+                # "db": num_db,
                 "query": num_queries,
                 "Top1(%)": acc1_list,
                 "Top5(%)": acc5_list,
@@ -80,7 +78,7 @@ def main():
         num_query = len(path_queries)
 
         if num_query == 0:
-            st.markdown(f"None")
+            st.markdown("None")
             return
 
         if num_query == 1:
@@ -116,10 +114,10 @@ def main():
 
             imgs_db.append(img_db)
 
-        st.markdown(f"### Query:")
+        st.markdown("### Query:")
         st.image(cv2.cvtColor(img_query, cv2.COLOR_BGR2RGB))
 
-        st.markdown(f"### Database:")
+        st.markdown("### Database:")
         st.image(
             cv2.cvtColor(cv2.hconcat(imgs_db[:5]), cv2.COLOR_BGR2RGB),
             use_column_width=True,
