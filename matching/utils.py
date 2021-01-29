@@ -25,7 +25,7 @@ def shape_data(path: str) -> Dict[str, Dict[str, List[str]]]:
     for id_cow in id_cows:
         top1, top2_5, top6_later = {}, {}, {}
         for path_query in path_queries:
-            if id_cow in path_query:
+            if id_cow == path_query.split("/")[-2]:
                 id_dbs = [path_db.split("/")[-2] for path_db in res[path_query]]
                 if id_cow == id_dbs[0]:
                     top1[path_query] = res[path_query]
