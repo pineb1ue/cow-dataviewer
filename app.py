@@ -36,9 +36,6 @@ def main():
     if content == Content.table:
         id_queries = list(anns.keys())
 
-        _acc1, _acc5 = 0, 0
-        _num_queries = 0
-
         num_queries = []
         acc1_list, acc5_list = [], []
 
@@ -51,10 +48,6 @@ def main():
             acc1_list.append(100 * acc1 / num_query)
             acc5_list.append(100 * acc5 / num_query)
             num_queries.append(num_query)
-
-            _acc1 += acc1
-            _acc5 += acc5
-            _num_queries += num_query
 
         # num_db = [1 for i in range(len(num_queries))]
 
