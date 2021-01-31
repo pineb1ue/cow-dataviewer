@@ -89,6 +89,9 @@ def main():
         else:
             index = st.sidebar.slider("Page index (1-index)", 1, num_query, value=1)
 
+        st.markdown(
+            f"Test: {date.split('-')[0]}\n\nTrain: {date.split('-')[1].split('.')[0]}\n - - -  "
+        )
         st.markdown(f"Page: {index}/{num_query}")
         index -= 1  # convert to 0-index
 
