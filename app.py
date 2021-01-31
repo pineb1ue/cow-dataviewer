@@ -18,7 +18,14 @@ with open("config.yml") as f:
 def main():
     st.title("Cow DataViewer")
 
-    date = st.sidebar.selectbox("date", os.listdir(cfg["data_root"]))
+    date = st.sidebar.selectbox(
+        "date",
+        [
+            f
+            for f in os.listdir(cfg["data_root"])
+            if os.path.isfile(join(cfg["data_root"], f))
+        ],
+    )
 
     content = Content.from_str(
         (st.sidebar.selectbox("Content", Content.all(), index=0))
@@ -62,7 +69,10 @@ def main():
         )
 
         st.markdown(
-            f"### Result:\nTop1: {round(100 * _acc1 / _num_queries, 1)}%, Top5: {round(100 * _acc5 / _num_queries, 1)}%"
+            f"### Data:\nTest: {date.split('-')[0]}\n\nTrain: {date.split('-')[1].split('.')[0]}"
+        )
+        st.markdown(
+            f"### Result:\nTop1: {round(sum(acc1_list) / len(acc1_list), 1)}%, Top5: {round(sum(acc5_list) / len(acc5_list), 1)}%"
         )
 
         table_df.plot.bar(y=["Top1(%)", "Top5(%)"], alpha=0.8, figsize=(12, 4))
@@ -96,7 +106,7 @@ def main():
         path_db = anns[id_query][res_type][path_query]
         imgs_db = []
 
-        assert len(path_db) == 10, "database length is not 10"
+        # assert len(path_db) == 10, "database length is not 10"
 
         for i, path in enumerate(path_db):
 
@@ -122,10 +132,10 @@ def main():
             cv2.cvtColor(cv2.hconcat(imgs_db[:5]), cv2.COLOR_BGR2RGB),
             use_column_width=True,
         )
-        st.image(
-            cv2.cvtColor(cv2.hconcat(imgs_db[5:10]), cv2.COLOR_BGR2RGB),
-            use_column_width=True,
-        )
+        # st.image(
+        #     cv2.cvtColor(cv2.hconcat(imgs_db[5:10]), cv2.COLOR_BGR2RGB),
+        #     use_column_width=True,
+        # )
 
 
 if __name__ == "__main__":
