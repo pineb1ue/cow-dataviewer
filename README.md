@@ -2,11 +2,6 @@
 
 This library is a rich data viewer.
 
-## Run
-```
-streamlit run app.py
-```
-
 ## Demo
 
 **Table View**
