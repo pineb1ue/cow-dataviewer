@@ -15,5 +15,5 @@ This library is a rich data viewer.
 ```
 git clone https://github.com/pineb1ue/cow-dataviewer
 cd cow-dataviewer
-make link path=path/to/the/cow
+streamlit run app.py
 ```
