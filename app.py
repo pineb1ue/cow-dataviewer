@@ -1,12 +1,13 @@
 import cv2
 import os
+from PIL import Image
 from os.path import join
 
 import yaml
 import pandas as pd
 import streamlit as st
 
-from matching.utils import shape_data
+from matching.utils import shape_data, pad_image
 from src.drawer import Drawer
 from src.typing import Content
 
@@ -96,8 +97,9 @@ def main():
         index -= 1  # convert to 0-index
 
         path_query = path_queries[index]
-        img_query = cv2.imread(path_query)
-        img_query = cv2.resize(img_query, (224, 224))
+        img_query = Image.open(path_query)
+        img_query = pad_image(img_query)
+        img_query = img_query.resize((224, 224))
 
         path_db = anns[id_query][res_type][path_query]
         imgs_db = []
@@ -121,7 +123,7 @@ def main():
             imgs_db.append(img_db)
 
         st.markdown("### Query:")
-        st.image(cv2.cvtColor(img_query, cv2.COLOR_BGR2RGB))
+        st.image(img_query)
 
         st.markdown("### Database:")
         st.image(

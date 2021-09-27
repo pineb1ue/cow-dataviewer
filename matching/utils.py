@@ -1,4 +1,6 @@
+import PIL
 import json
+from PIL import Image
 from typing import Dict, List
 
 
@@ -37,3 +39,17 @@ def shape_data(path: str) -> Dict[str, Dict[str, List[str]]]:
         anns[id_cow] = {"top1": top1, "top2_5": top2_5, "top6_later": top6_later}
 
     return anns
+
+
+def pad_image(image: PIL.Image, bg_color=(0, 0, 0)):
+    w, h = image.size
+    if w == h:
+        return image
+    elif w > h:
+        result = Image.new(image.mode, (w, w), bg_color)
+        result.paste(image, (0, (w - h) // 2))
+        return result
+    else:
+        result = Image.new(image.mode, (h, h), bg_color)
+        result.paste(image, ((h - w) // 2, 0))
+        return result
