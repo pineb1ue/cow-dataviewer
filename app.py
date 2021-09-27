@@ -62,7 +62,7 @@ def main():
         )
 
         st.markdown(
-            f"### Data:\nTest: {date.split('-')[0]}\n\nTrain: {date.split('-')[1].split('.')[0]}"
+            f"### Data: {date.split('.')[0]}"
         )
         st.markdown(
             f"### Result:\nTop1: {round(sum(acc1_list) / len(acc1_list), 1)}%, Top5: {round(sum(acc5_list) / len(acc5_list), 1)}%"
@@ -89,9 +89,9 @@ def main():
         else:
             index = st.sidebar.slider("Page index (1-index)", 1, num_query, value=1)
 
-        st.markdown(
-            f"Test: {date.split('-')[0]}\n\nTrain: {date.split('-')[1].split('.')[0]}\n - - -  "
-        )
+        # st.markdown(
+        #     f"Test: {date.split('-')[0]}\n\nTrain: {date.split('-')[1].split('.')[0]}\n - - -  "
+        # )
         st.markdown(f"Page: {index}/{num_query}")
         index -= 1  # convert to 0-index
 
@@ -133,6 +133,7 @@ def main():
         #     use_column_width=True,
         # )
 
+    st.set_option('deprecation.showPyplotGlobalUse', False)
 
 if __name__ == "__main__":
     main()
